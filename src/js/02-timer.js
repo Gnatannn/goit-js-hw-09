@@ -1,6 +1,6 @@
 // Описан в документации
 import flatpickr from 'flatpickr';
-// import Notiflix from 'notiflix';
+import Notiflix from 'notiflix';
 // Дополнительный импорт стилей
 import 'flatpickr/dist/flatpickr.min.css';
 
@@ -32,7 +32,10 @@ const options = {
     if (dateNow.getTime() < dateStart.getTime()) {
       refs.startBtn.disabled = false;
     } else {
-      window.alert('Please choose a date in the future');
+      //   window.alert('Please choose a date in the future');
+      Notiflix.Notify.failure('Please choose a date in the future', {
+        position: 'center-top',
+      });
     }
   },
 };
@@ -41,15 +44,23 @@ const calendar = flatpickr(refs.input, options);
 
 refs.startBtn.addEventListener('click', onClickStartTimer);
 
+let timerId = null;
+
 function onClickStartTimer() {
   refs.startBtn.disabled = true;
+  refs.input.disabled = true;
   const userDate = calendar.latestSelectedDateObj;
-
-  setInterval(() => {
+  Notiflix.Notify.success('Your timer has been activated ', {
+    position: 'center-top',
+  });
+  timerId = setInterval(() => {
     const dateNow = new Date();
     const deltaTime = userDate - dateNow;
     const time = convertMs(deltaTime);
     updateTimerMarkup(time);
+
+    if (deltaTime <= 1000) {
+    }
 
     console.log(convertMs(deltaTime));
     // console.log(userDate);
@@ -57,6 +68,11 @@ function onClickStartTimer() {
     // console.log(userDate - dateNow);
   }, 1000);
 }
+
+// function onClickStopTimer() {
+//   clearInterval(timerId);
+//   refs.startBtn.disabled = false;
+// }
 
 function addLeadingZero(value) {
   return String(value).padStart(2, '0');
