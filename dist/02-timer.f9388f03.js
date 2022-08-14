@@ -555,17 +555,9 @@ function onClickStartTimer() {
         const deltaTime = userDate - dateNow;
         const time = convertMs(deltaTime);
         updateTimerMarkup(time);
-        deltaTime;
-        console.log(convertMs(deltaTime));
-    // console.log(userDate);
-    // console.log(dateNow);
-    // console.log(userDate - dateNow);
+        if (deltaTime <= 1100) clearInterval(timerId);
     }, 1000);
 }
-// function onClickStopTimer() {
-//   clearInterval(timerId);
-//   refs.startBtn.disabled = false;
-// }
 function addLeadingZero(value) {
     return String(value).padStart(2, "0");
 }

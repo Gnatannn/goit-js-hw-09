@@ -59,20 +59,11 @@ function onClickStartTimer() {
     const time = convertMs(deltaTime);
     updateTimerMarkup(time);
 
-    if (deltaTime <= 1000) {
+    if (deltaTime <= 1100) {
+      clearInterval(timerId);
     }
-
-    console.log(convertMs(deltaTime));
-    // console.log(userDate);
-    // console.log(dateNow);
-    // console.log(userDate - dateNow);
   }, 1000);
 }
-
-// function onClickStopTimer() {
-//   clearInterval(timerId);
-//   refs.startBtn.disabled = false;
-// }
 
 function addLeadingZero(value) {
   return String(value).padStart(2, '0');
