@@ -508,25 +508,24 @@ var _notiflix = require("notiflix");
 var _notiflixDefault = parcelHelpers.interopDefault(_notiflix);
 const refs = {
     form: document.querySelector(".form"),
-    delayInput: document.querySelector('input[name="delay"]'),
-    stepInput: document.querySelector('input[name="step"]'),
-    amountInput: document.querySelector('input[name="amount"]'),
+    delay: document.querySelector('input[name="delay"]'),
+    step: document.querySelector('input[name="step"]'),
+    amount: document.querySelector('input[name="amount"]'),
     btnSubmit: document.querySelector('button[type="submit"]')
 };
 refs.btnSubmit.addEventListener("submit", onFormSubmit);
-function onFormSubmit(event) {
-    event.preventDefault();
-    const delayTime = Number(refs.delayInput.value);
-    const stepTime = Number(refs.stepInput.value);
-    const amountNumber = Number(refs.amountInput.value);
-    console.log(delayTime);
+console.log(refs.btnSubmit);
+function onFormSubmit(evt) {
+    evt.preventDefault();
+    let delayTime = Number(evt.currentTarget.delay.value);
+    const stepTime = Number(evt.currentTarget.step.value);
+    const amountNumber = Number(evt.currentTarget.amount.value);
+    console.log(Number(refs.delayInput.value));
     console.log(stepTime);
     console.log(amountNumber);
-    if (delayTime < 0 || stepTime < 0 || amountNumber < 0) return (0, _notiflixDefault.default).Notify.failure("Please put values > 0", {
-        position: "center-top"
-    });
-    for(let i = 0; i < amountNumber; i += 1){
-        createPromise(delayTime, stepTime).then(({ position , delay  })=>{
+    if (delayTime >= 0 && stepTime >= 0 && amountNumber >= 0) for(let position1 = 1; position1 <= amountNumber; position1 += 1){
+        delayTime += stepTime;
+        createPromise(position1, delayTime).then(({ position , delay  })=>{
             (0, _notiflixDefault.default).Notify.failure(`✅ Fulfilled promise ${position} in ${delay}ms`, {
                 position: "center-top"
             });
@@ -535,8 +534,10 @@ function onFormSubmit(event) {
                 position: "center-top"
             });
         });
-        delayTime += stepTime;
     }
+    else (0, _notiflixDefault.default).Notify.failure("Please put values > 0", {
+        position: "center-top"
+    });
 }
 function createPromise(position, delay) {
     return new Promise((resolve, reject)=>{

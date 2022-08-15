@@ -2,48 +2,51 @@ import Notiflix from 'notiflix';
 
 const refs = {
   form: document.querySelector('.form'),
-  delayInput: document.querySelector('input[name="delay"]'),
-  stepInput: document.querySelector('input[name="step"]'),
-  amountInput: document.querySelector('input[name="amount"]'),
+  delay: document.querySelector('input[name="delay"]'),
+  step: document.querySelector('input[name="step"]'),
+  amount: document.querySelector('input[name="amount"]'),
   btnSubmit: document.querySelector('button[type="submit"]'),
 };
 
 refs.btnSubmit.addEventListener('submit', onFormSubmit);
 
-function onFormSubmit(event) {
-  event.preventDefault();
-  const delayTime = Number(refs.delayInput.value);
-  const stepTime = Number(refs.stepInput.value);
-  const amountNumber = Number(refs.amountInput.value);
-  console.log(delayTime);
+console.log(refs.btnSubmit);
+
+function onFormSubmit(evt) {
+  evt.preventDefault();
+  let delayTime = Number(evt.currentTarget.delay.value);
+  const stepTime = Number(evt.currentTarget.step.value);
+  const amountNumber = Number(evt.currentTarget.amount.value);
+  console.log(Number(refs.delayInput.value));
   console.log(stepTime);
   console.log(amountNumber);
 
-  if (delayTime < 0 || stepTime < 0 || amountNumber < 0) {
-    return Notiflix.Notify.failure('Please put values > 0', {
+  if (delayTime >= 0 && stepTime >= 0 && amountNumber >= 0) {
+    for (let position = 1; position <= amountNumber; position += 1) {
+      delayTime += stepTime;
+
+      createPromise(position, delayTime)
+        .then(({ position, delay }) => {
+          Notiflix.Notify.failure(
+            `✅ Fulfilled promise ${position} in ${delay}ms`,
+            {
+              position: 'center-top',
+            }
+          );
+        })
+        .catch(({ position, delay }) => {
+          Notiflix.Notify.failure(
+            `❌ Rejected promise ${position} in ${delay}ms`,
+            {
+              position: 'center-top',
+            }
+          );
+        });
+    }
+  } else {
+    Notiflix.Notify.failure('Please put values > 0', {
       position: 'center-top',
     });
-  }
-  for (let i = 0; i < amountNumber; i += 1) {
-    createPromise(delayTime, stepTime)
-      .then(({ position, delay }) => {
-        Notiflix.Notify.failure(
-          `✅ Fulfilled promise ${position} in ${delay}ms`,
-          {
-            position: 'center-top',
-          }
-        );
-      })
-      .catch(({ position, delay }) => {
-        Notiflix.Notify.failure(
-          `❌ Rejected promise ${position} in ${delay}ms`,
-          {
-            position: 'center-top',
-          }
-        );
-      });
-
-    delayTime += stepTime;
   }
 }
 
