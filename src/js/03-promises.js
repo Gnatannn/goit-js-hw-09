@@ -8,7 +8,7 @@ const refs = {
   btnSubmit: document.querySelector('button[type="submit"]'),
 };
 
-refs.btnSubmit.addEventListener('submit', onFormSubmit);
+refs.form.addEventListener('submit', onFormSubmit);
 
 console.log(refs.btnSubmit);
 
@@ -17,9 +17,9 @@ function onFormSubmit(evt) {
   let delayTime = Number(evt.currentTarget.delay.value);
   const stepTime = Number(evt.currentTarget.step.value);
   const amountNumber = Number(evt.currentTarget.amount.value);
-  console.log(Number(refs.delayInput.value));
-  console.log(stepTime);
-  console.log(amountNumber);
+  // console.log(Number(refs.delayInput.value));
+  // console.log(stepTime);
+  // console.log(amountNumber);
 
   if (delayTime >= 0 && stepTime >= 0 && amountNumber >= 0) {
     for (let position = 1; position <= amountNumber; position += 1) {
@@ -27,7 +27,7 @@ function onFormSubmit(evt) {
 
       createPromise(position, delayTime)
         .then(({ position, delay }) => {
-          Notiflix.Notify.failure(
+          Notiflix.Notify.success(
             `✅ Fulfilled promise ${position} in ${delay}ms`,
             { position: 'center-top' }
           );
