@@ -1,5 +1,5 @@
 {
-  "name": "Gnatannn/goit-js-hw-09",
+  "name": "parcel-project-template",
   "version": "2.0.0",
   "description": "",
   "homepage": "https://Gnatannn.github.io/goit-js-hw-09",
@@ -9,13 +9,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Gnatannn/goit-js-hw-09.git"
+    "url": "git+https://github.com/goitacademy/parcel-project-template.git"
   },
   "keywords": [],
   "author": "Andrey",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Gnatannn/parcel-project-template/issues"
+    "url": "https://github.com/goitacademy/parcel-project-template/issues"
   },
   "dependencies": {
     "flatpickr": "^4.6.13",
