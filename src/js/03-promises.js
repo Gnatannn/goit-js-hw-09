@@ -29,17 +29,13 @@ function onFormSubmit(evt) {
         .then(({ position, delay }) => {
           Notiflix.Notify.failure(
             `✅ Fulfilled promise ${position} in ${delay}ms`,
-            {
-              position: 'center-top',
-            }
+            { position: 'center-top' }
           );
         })
         .catch(({ position, delay }) => {
           Notiflix.Notify.failure(
             `❌ Rejected promise ${position} in ${delay}ms`,
-            {
-              position: 'center-top',
-            }
+            { position: 'center-top' }
           );
         });
     }
